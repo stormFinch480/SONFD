@@ -1,0 +1,13 @@
+# 5. 多线程并发下载模拟（线程池）
+from concurrent.futures import ThreadPoolExecutor
+import time, random
+
+def fetch(task_id):
+    delay = random.uniform(0.1, 0.5)
+    time.sleep(delay)
+    return f"任务{task_id} 完成 (耗时 {delay:.2f}s)"
+
+with ThreadPoolExecutor(max_workers=4) as pool:
+    results = pool.map(fetch, range(8))
+    for r in results:
+        print(r)
